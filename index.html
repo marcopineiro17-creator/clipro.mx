@@ -8,49 +8,77 @@
 <style>
 body{
   margin:0;
-  font-family:'Segoe UI', Arial, sans-serif;
-  background:#000;
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:#05070d;
   color:#fff;
   overflow-x:hidden;
 }
 
-/* Fondo tarjetas difuminadas */
+/* Fondo azul llamativo */
 .background{
   position:fixed;
-  width:100%;
-  height:100%;
+  inset:0;
   z-index:-1;
-  overflow:hidden;
+  background:
+  radial-gradient(circle at 20% 30%, rgba(30,90,255,.25), transparent 40%),
+  radial-gradient(circle at 80% 70%, rgba(0,180,255,.18), transparent 45%),
+  #05070d;
 }
 
-.card{
+/* Tarjetas difuminadas fondo */
+.card-bg{
   position:absolute;
   width:260px;
   height:160px;
   border-radius:20px;
-  background:linear-gradient(145deg,#0c0c0c,#1a1a1a);
-  box-shadow:0 0 40px rgba(201,164,76,.15);
-  filter:blur(14px);
+  background:linear-gradient(145deg,#0a0f1f,#121826);
+  filter:blur(18px);
   opacity:.35;
   animation:float 14s infinite ease-in-out;
 }
-
-.card:nth-child(1){ top:10%; left:5%; }
-.card:nth-child(2){ top:65%; left:70%; animation-delay:4s; }
-.card:nth-child(3){ top:35%; left:40%; animation-delay:7s; }
+.card-bg:nth-child(1){ top:8%; left:6%; }
+.card-bg:nth-child(2){ top:65%; left:70%; animation-delay:4s; }
+.card-bg:nth-child(3){ top:35%; left:40%; animation-delay:7s; }
 
 @keyframes float{
   0%{transform:translateY(0) rotate(0)}
-  50%{transform:translateY(-40px) rotate(8deg)}
-  100%{transform:translateY(0) rotate(0)}
+  50%{transform:translateY(-45px) rotate(6deg)}
+  100%{transform:translateY(0)}
 }
+
+header{text-align:center;padding:80px 20px 30px;}
+
+/* Dorado brillante */
+h1{
+  font-size:54px;
+  letter-spacing:6px;
+  background:linear-gradient(90deg,#ffd86b,#fff1a6,#d4a83d);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero{text-align:center;max-width:900px;margin:auto;padding:40px 20px;}
+.hero p{font-size:20px;opacity:.85;}
+
+.btn{
+  display:inline-block;
+  margin-top:35px;
+  padding:18px 42px;
+  background:linear-gradient(145deg,#ffd86b,#c79b2d);
+  color:#000;
+  font-weight:bold;
+  border-radius:12px;
+  text-decoration:none;
+  transition:.35s;
+}
+.btn:hover{transform:scale(1.05);} 
 
 /* Demo NFC */
 .nfc-demo{
   display:flex;
   justify-content:center;
   align-items:center;
-  margin-top:50px;
+  margin-top:60px;
   position:relative;
   height:260px;
 }
@@ -60,134 +88,93 @@ body{
   height:260px;
   border-radius:28px;
   background:#111;
-  border:2px solid #333;
+  border:2px solid #2d2d2d;
   position:absolute;
   overflow:hidden;
 }
 
-/* Pantalla iluminada */
-.phone::after{
-  content:"";
+/* Pantalla encendida */
+.screen{
   position:absolute;
-  inset:0;
-  background:radial-gradient(circle,#1b1b1b,#000);
-  opacity:.9;
+  inset:6px;
+  border-radius:22px;
+  background:#fff;
+  opacity:0;
+  animation:screenOn 5s infinite;
 }
 
-/* Logos animados */
+@keyframes screenOn{
+  0%,25%{opacity:0}
+  45%,70%{opacity:1}
+  100%{opacity:0}
+}
+
+/* Logos */
 .logo{
   position:absolute;
-  width:70px;
-  height:70px;
+  width:65px;
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
   opacity:0;
-  animation:showLogo 6s infinite;
+}
+.logo.fb{animation:logoFB 6s infinite;}
+.logo.wa{animation:logoWA 6s infinite;}
+
+@keyframes logoFB{
+  0%,30%{opacity:0}
+  40%,55%{opacity:1}
+  70%,100%{opacity:0}
 }
 
-.logo.whatsapp{
-  animation-delay:3s;
-}
-
-@keyframes showLogo{
-  0%{opacity:0; transform:translate(-50%,-40%) scale(.6)}
-  20%{opacity:1; transform:translate(-50%,-50%) scale(1)}
-  40%{opacity:0}
+@keyframes logoWA{
+  0%,60%{opacity:0}
+  70%,90%{opacity:1}
   100%{opacity:0}
 }
 
+/* TARJETA NFC GLASSMORPHISM */
 .nfc-card{
   width:210px;
   height:130px;
-  border-radius:18px;
-  background:linear-gradient(145deg,#111,#000);
-  border:1px solid rgba(201,164,76,.4);
+  border-radius:20px;
   position:absolute;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.25);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,.5),
+    inset 0 0 20px rgba(255,255,255,.08);
   animation:tap 5s infinite ease-in-out;
 }
 
 @keyframes tap{
   0%{transform:translateY(0)}
   50%{transform:translateY(-70px)}
-  70%{transform:translateY(-20px)}
+  70%{transform:translateY(-25px)}
   100%{transform:translateY(0)}
 }
 
-header{
-  text-align:center;
-  padding:80px 20px 30px;
-}
-
-h1{
-  font-size:52px;
-  letter-spacing:5px;
-  color:#c9a44c;
-}
-
-.hero{
-  text-align:center;
-  max-width:900px;
-  margin:auto;
-  padding:40px 20px;
-}
-
-.hero p{
-  font-size:20px;
-  opacity:.85;
-}
-
-.btn{
-  display:inline-block;
-  margin-top:35px;
-  padding:18px 42px;
-  background:#c9a44c;
-  color:#000;
-  font-weight:bold;
-  border-radius:12px;
-  text-decoration:none;
-  transition:.35s;
-}
-
-.btn:hover{
-  background:#fff;
-  transform:scale(1.05);
-}
-
-.benefits{
-  max-width:900px;
-  margin:auto;
-  padding:60px 20px;
-}
-
+.benefits{max-width:900px;margin:auto;padding:60px 20px;}
 .benefits li{
-  background:#0f0f0f;
+  background:#0f1422;
   padding:18px;
   margin-bottom:14px;
-  border-left:4px solid #c9a44c;
+  border-left:4px solid #ffd86b;
   list-style:none;
-  transition:.3s;
 }
 
-.benefits li:hover{
-  background:#181818;
-  transform:translateX(6px);
-}
-
-footer{
-  text-align:center;
-  padding:40px;
-  opacity:.6;
-}
+footer{text-align:center;padding:40px;opacity:.6;}
 </style>
 </head>
 
 <body>
 
 <div class="background">
-  <div class="card"></div>
-  <div class="card"></div>
-  <div class="card"></div>
+  <div class="card-bg"></div>
+  <div class="card-bg"></div>
+  <div class="card-bg"></div>
 </div>
 
 <header>
@@ -202,14 +189,13 @@ Comparte tu negocio con tecnología NFC.
 Una tarjeta o llavero reemplaza miles de tarjetas impresas.
 </p>
 
-<a href="https://wa.link/yv77kv" class="btn">
-Mi negocio necesita uno
-</a>
+<a href="https://wa.link/yv77kv" class="btn">Mi negocio necesita uno</a>
 
 <div class="nfc-demo">
   <div class="phone">
-    <img class="logo facebook" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg">
-    <img class="logo whatsapp" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg">
+    <div class="screen"></div>
+    <img class="logo fb" src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg">
+    <img class="logo wa" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
   </div>
   <div class="nfc-card"></div>
 </div>
@@ -227,11 +213,7 @@ Mi negocio necesita uno
 </ul>
 </section>
 
-<footer>
-CLIPRO © 2026 · Tecnología NFC empresarial
-</footer>
+<footer>CLIPRO © 2026 · Tecnología NFC empresarial</footer>
 
 </body>
 </html>
-
-
