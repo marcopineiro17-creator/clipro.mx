@@ -1,126 +1,237 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CLIPRO | Tarjetas y Llaveros NFC</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CLIPRO NFC</title>
 
 <style>
 body{
-    margin:0;
-    font-family: Arial, Helvetica, sans-serif;
-    background:#000;
-    color:#fff;
+  margin:0;
+  font-family:'Segoe UI', Arial, sans-serif;
+  background:#000;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* Fondo tarjetas difuminadas */
+.background{
+  position:fixed;
+  width:100%;
+  height:100%;
+  z-index:-1;
+  overflow:hidden;
+}
+
+.card{
+  position:absolute;
+  width:260px;
+  height:160px;
+  border-radius:20px;
+  background:linear-gradient(145deg,#0c0c0c,#1a1a1a);
+  box-shadow:0 0 40px rgba(201,164,76,.15);
+  filter:blur(14px);
+  opacity:.35;
+  animation:float 14s infinite ease-in-out;
+}
+
+.card:nth-child(1){ top:10%; left:5%; }
+.card:nth-child(2){ top:65%; left:70%; animation-delay:4s; }
+.card:nth-child(3){ top:35%; left:40%; animation-delay:7s; }
+
+@keyframes float{
+  0%{transform:translateY(0) rotate(0)}
+  50%{transform:translateY(-40px) rotate(8deg)}
+  100%{transform:translateY(0) rotate(0)}
+}
+
+/* Demo NFC */
+.nfc-demo{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top:50px;
+  position:relative;
+  height:260px;
+}
+
+.phone{
+  width:150px;
+  height:260px;
+  border-radius:28px;
+  background:#111;
+  border:2px solid #333;
+  position:absolute;
+  overflow:hidden;
+}
+
+/* Pantalla iluminada */
+.phone::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle,#1b1b1b,#000);
+  opacity:.9;
+}
+
+/* Logos animados */
+.logo{
+  position:absolute;
+  width:70px;
+  height:70px;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  opacity:0;
+  animation:showLogo 6s infinite;
+}
+
+.logo.whatsapp{
+  animation-delay:3s;
+}
+
+@keyframes showLogo{
+  0%{opacity:0; transform:translate(-50%,-40%) scale(.6)}
+  20%{opacity:1; transform:translate(-50%,-50%) scale(1)}
+  40%{opacity:0}
+  100%{opacity:0}
+}
+
+.nfc-card{
+  width:210px;
+  height:130px;
+  border-radius:18px;
+  background:linear-gradient(145deg,#111,#000);
+  border:1px solid rgba(201,164,76,.4);
+  position:absolute;
+  animation:tap 5s infinite ease-in-out;
+}
+
+@keyframes tap{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-70px)}
+  70%{transform:translateY(-20px)}
+  100%{transform:translateY(0)}
 }
 
 header{
-    padding:60px 20px;
-    text-align:center;
+  text-align:center;
+  padding:80px 20px 30px;
 }
 
 h1{
-    font-size:48px;
-    letter-spacing:3px;
-}
-
-h2{
-    color:#c9a44c;
-}
-
-.container{
-    max-width:1000px;
-    margin:auto;
-    padding:40px 20px;
+  font-size:52px;
+  letter-spacing:5px;
+  color:#c9a44c;
 }
 
 .hero{
-    text-align:center;
+  text-align:center;
+  max-width:900px;
+  margin:auto;
+  padding:40px 20px;
 }
 
 .hero p{
-    font-size:20px;
-    opacity:0.85;
+  font-size:20px;
+  opacity:.85;
 }
 
 .btn{
-    display:inline-block;
-    margin-top:25px;
-    padding:16px 35px;
-    background:#c9a44c;
-    color:#000;
-    font-weight:bold;
-    text-decoration:none;
-    border-radius:8px;
-    transition:.3s;
+  display:inline-block;
+  margin-top:35px;
+  padding:18px 42px;
+  background:#c9a44c;
+  color:#000;
+  font-weight:bold;
+  border-radius:12px;
+  text-decoration:none;
+  transition:.35s;
 }
 
 .btn:hover{
-    background:#fff;
+  background:#fff;
+  transform:scale(1.05);
 }
 
 .benefits{
-    margin-top:50px;
-}
-
-.benefits ul{
-    list-style:none;
-    padding:0;
+  max-width:900px;
+  margin:auto;
+  padding:60px 20px;
 }
 
 .benefits li{
-    padding:18px;
-    margin-bottom:12px;
-    background:#111;
-    border-left:4px solid #c9a44c;
+  background:#0f0f0f;
+  padding:18px;
+  margin-bottom:14px;
+  border-left:4px solid #c9a44c;
+  list-style:none;
+  transition:.3s;
+}
+
+.benefits li:hover{
+  background:#181818;
+  transform:translateX(6px);
 }
 
 footer{
-    text-align:center;
-    padding:40px;
-    opacity:0.6;
-    font-size:14px;
+  text-align:center;
+  padding:40px;
+  opacity:.6;
 }
 </style>
 </head>
 
 <body>
 
+<div class="background">
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+</div>
+
 <header>
 <h1>CLIPRO</h1>
-<p>Tarjetas, llaveros y recuerdos NFC inteligentes</p>
+<p>Tarjetas, llaveros y recuerdos NFC premium</p>
 </header>
 
-<section class="container hero">
-<h2>Networking moderno sin papel</h2>
+<section class="hero">
+<h2>Networking inteligente sin papel</h2>
 <p>
-Comparte tu negocio con tecnología NFC. 
-Una sola tarjeta o llavero puede sustituir miles de tarjetas impresas.
+Comparte tu negocio con tecnología NFC.
+Una tarjeta o llavero reemplaza miles de tarjetas impresas.
 </p>
 
 <a href="https://wa.link/yv77kv" class="btn">
 Mi negocio necesita uno
 </a>
+
+<div class="nfc-demo">
+  <div class="phone">
+    <img class="logo facebook" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg">
+    <img class="logo whatsapp" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg">
+  </div>
+  <div class="nfc-card"></div>
+</div>
 </section>
 
-<section class="container benefits">
-<h2>Beneficios de nuestras tarjetas digitales</h2>
-
+<section class="benefits">
 <ul>
-<li>♻️ Reducción de basura y papel — opción ecológica.</li>
-<li>💼 Imagen moderna y tecnológica para tu negocio.</li>
-<li>🔄 Uso ilimitado: nunca se gastan ni se terminan.</li>
-<li>📲 Compartes contacto, redes, catálogo o web en segundos.</li>
-<li>🔗 Siempre contigo: tarjeta física o llavero NFC.</li>
-<li>⚡ Actualización instantánea sin volver a imprimir.</li>
-<li>🚀 Ideal para networking, ventas, eventos y branding.</li>
+<li>♻️ Reducción de basura y papel.</li>
+<li>💼 Imagen moderna y premium para tu marca.</li>
+<li>🔄 Uso ilimitado: nunca se terminan.</li>
+<li>📲 Comparte contacto, redes o catálogo en segundos.</li>
+<li>🔗 Siempre contigo en tarjeta o llavero NFC.</li>
+<li>⚡ Actualización digital sin reimpresión.</li>
+<li>🚀 Ideal para networking, ventas y branding.</li>
 </ul>
-
 </section>
 
 <footer>
-CLIPRO © 2026 · Tecnología NFC para negocios inteligentes
+CLIPRO © 2026 · Tecnología NFC empresarial
 </footer>
 
 </body>
 </html>
+
 
